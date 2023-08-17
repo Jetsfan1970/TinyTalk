@@ -1,6 +1,7 @@
 from flask import Flask, request, redirect, render_template, flash
 from models import db, connect_db, User, Toddler, Word, ToddlerWord, WordArt
 from flask_debugtoolbar import DebugToolbarExtension
+import requests
 
 app = Flask(__name__)
 app.config['SQLALCHEMY_DATABASE_URI'] = 'postgresql:///tinytalk'
