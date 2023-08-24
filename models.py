@@ -1,10 +1,13 @@
 from flask_sqlalchemy import SQLAlchemy
 from flask_bcrypt import Bcrypt
+from flask_login import UserMixin
+from datetime import datetime
+
 
 db = SQLAlchemy()
 
 
-class User(db.Model):
+class User(db.Model, UserMixin):
     __tablename__ = 'users'
     id = db.Column(db.Integer, primary_key=True)
     username = db.Column(db.String(80), unique=True, nullable=False)
@@ -28,6 +31,15 @@ class Word(db.Model):
     definition = db.Column(db.String(255), nullable=True)
     learned_by = db.relationship('ToddlerWord', backref='word', lazy=True)
     art = db.relationship('WordArt', backref='word', uselist=False)
+    
+class SuggestedWord(db.Model):
+    __tablename__ = 'suggested_words'
+    id = db.Column(db.Integer, primary_key=True)
+    toddler_id = db.Column(db.Integer, db.ForeignKey('toddlers.id'), nullable=False)
+    word_id = db.Column(db.Integer, db.ForeignKey('words.id'), nullable=False)
+    suggested_on = db.Column(db.DateTime, nullable=False, default=datetime.utcnow)
+    is_learned = db.Column(db.Boolean, default=False, nullable=False)
+
 
 class ToddlerWord(db.Model):
     __tablename__ = 'toddler_words'
