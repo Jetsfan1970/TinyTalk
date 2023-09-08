@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Submitted Words</title>
+  </head>
+  <body>
+    <h1>Welcome, {{ current_user.username }}</h1>
+
+    {% if toddler %}
+    <div class="toddler-details"></div>
+    {% endif %}
+
+    <h3>All Suggested Words:</h3>
+    <ul>
+      {% for suggestion in suggested_words %}
+      <li>
+        {{ suggestion[1].word }} ({{
+        suggestion[0].suggested_on.strftime('%d-%m-%Y') }})
+      </li>
+      {% endfor %}
+    </ul>
+  </body>
+</html>

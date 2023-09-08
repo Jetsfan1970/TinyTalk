@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Learned Words</title>
+  </head>
+  <body>
+    <h1>Learned Words</h1>
+    <a href="{{ url_for('dashboard') }}">Back to Dashboard</a>
+
+    {% if toddler %}
+    <div class="toddler-details">
+      <h2>{{ toddler.name }}</h2>
+      <p>Age: {{ toddler.age }}</p>
+    </div>
+    {% endif %}
+
+    <h3>List of Learned Words:</h3>
+    <ul>
+      {% for learned_word in learned_words %}
+      <li>{{ learned_word[1].word }}</li>
+      {% endfor %}
+    </ul>
+  </body>
+</html>

@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Suggest Word</title>
+  </head>
+  <body>
+    <h1>Suggest a Word for Your Toddler</h1>
+
+    <form method="POST">
+      {{ form.hidden_tag() }}
+      <div>{{ form.category.label }}: {{ form.category }}</div>
+      <div>{{ form.submit }}</div>
+    </form>
+
+    <!-- Display the suggested word once it's available -->
+    {% if word %}
+    <div>
+      <h2>Suggested Word:</h2>
+      <p>{{ word }}</p>
+    </div>
+    {% endif %}
+
+    <a href="{{ url_for('dashboard') }}">Go back to dashboard</a>
+  </body>
+</html>

@@ -28,7 +28,7 @@ class Word(db.Model):
     __tablename__ = 'words'
     id = db.Column(db.Integer, primary_key=True)
     word = db.Column(db.String(100), nullable=False, unique=True)
-    definition = db.Column(db.String(255), nullable=True)
+    notes = db.Column(db.String(255), nullable=True)
     learned_by = db.relationship('ToddlerWord', backref='word', lazy=True)
     art = db.relationship('WordArt', backref='word', uselist=False)
     
@@ -46,6 +46,7 @@ class ToddlerWord(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     toddler_id = db.Column(db.Integer, db.ForeignKey('toddlers.id'), nullable=False)
     word_id = db.Column(db.Integer, db.ForeignKey('words.id'), nullable=False)
+    learned_on = db.Column(db.DateTime, default=datetime.utcnow)
 
 class WordArt(db.Model):
     __tablename__ = 'word_arts'
