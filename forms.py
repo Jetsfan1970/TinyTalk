@@ -22,14 +22,13 @@ class LoginForm(FlaskForm):
     
 class AddToddlerForm(FlaskForm):
     name = StringField("Toddler Name", validators=[InputRequired()], render_kw={"placeholder": "Toddler Name"})
-    age = IntegerField("Toddler Age(In Months)", validators=[InputRequired()], render_kw={"placeholder" : "e.g., 24"})
-    learned_words = StringField("Already Learned Words", render_kw={"placeholder" : "e.g., dog, cat, hi"})
+    age = IntegerField("Toddler Age (In Months)", validators=[InputRequired()], render_kw={"placeholder" : "e.g., 24"})
     image_url = StringField("Image URL", render_kw={"placeholder": "URL for toddler's image"})
     submit = SubmitField('Add Toddler')
 
 class SuggestWordForm(FlaskForm):
     category = StringField("Word Category", render_kw={"placeholder" : "Animals, Family, Space, etc."})
-    submit = SubmitField('Suggest A Word')
+    submit = SubmitField('Get New Word')
 
 class AddLearnedWordForm(FlaskForm):
     learned_words = StringField("Add Learned Word", render_kw={"placeholder" : "e.g., dog, cat, hi"})

@@ -1,27 +1,30 @@
-<!DOCTYPE html>
-<html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Suggest Word</title>
-  </head>
-  <body>
-    <h1>Suggest a Word for Your Toddler</h1>
+{% extends "layout/base.html" %} {% block title %}Dashbaord - My Website{%
+endblock %} {% block content %}
+<div class="suggest-container">
+  <h1 id="suggest-h1">Get A New Word To For Your Toddler To Learn!</h1>
+  <h2 id="suggest-h2">Word Suggestion Is Based on Child's Age</h2>
 
-    <form method="POST">
-      {{ form.hidden_tag() }}
-      <div>{{ form.category.label }}: {{ form.category }}</div>
-      <div>{{ form.submit }}</div>
-    </form>
+  <form method="POST">
+    {{ form.hidden_tag() }}
+    <div>{{ form.category.label }} {{ form.category }}</div>
+    <div>{{ form.submit }}</div>
+  </form>
 
-    <!-- Display the suggested word once it's available -->
-    {% if word %}
-    <div>
-      <h2>Suggested Word:</h2>
-      <p>{{ word }}</p>
+  {% if word %}
+  <div>
+    {% if word_exists %}
+    <p id="already-exists">
+      The suggested word "{{ word }}" has been suggested. Please try again or a
+      suggest new category.
+    </p>
+    {% else %}
+    <div id="new-suggword">
+      <h2 id="new-h1">Suggested Word:</h2>
+      <p id="new-p">{{ word }}</p>
     </div>
     {% endif %}
-
-    <a href="{{ url_for('dashboard') }}">Go back to dashboard</a>
-  </body>
-</html>
+  </div>
+  {% endif %}
+  <a href="{{ url_for('dashboard') }}" class="back-button">Back to Dashboard</a>
+</div>
+{% endblock %}

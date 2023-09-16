@@ -4,11 +4,77 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Add Toddler</title>
+    <style>
+
+      input[type="submit"]:hover {
+        background-color: #fabda1;
+        cursor: pointer;
+      }
+
+      label {
+        font-size: 25px;
+        color: #6e7da2;
+        font-weight: bold;
+      }
+
+      form {
+        display: block;
+        width: 100%;
+        max-width: 500px;
+        padding: 20px;
+        margin: 0 auto;
+        text-align: center;
+      }
+
+      input[type="submit"] {
+        padding: 15px 55px;
+        border: none;
+        border-radius: 40px;
+        cursor: pointer;
+        font-size: 30px;
+        background-color: #db996c;
+        color: #fcf8f3;
+        margin: 30px;
+      }
+
+      input[type="text"],
+      input[type="number"] {
+        width: 100%;
+        padding: 15px;
+        margin-bottom: 10px;
+        border: 1px solid #fcf8f3;
+        border-radius: 40px;
+        font-size: 20px;
+        background-color: #aedadd;
+        color: #fcf8f3;
+        margin-top: 10px;
+      }
+
+      body {
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        height: 75vh;
+        margin: 0;
+        background-color: #fcf8f3;
+      }
+
+      h1 {
+        font-size: 60px;
+        color: #6e7da2;
+        font-weight: bold;
+      }
+
+      input::placeholder {
+        color: #fcf8f3;
+      }
+    </style>
   </head>
   <body>
-    <h1>Add Toddler</h1>
+    <h1>Create Toddler Profile To Start Learning!</h1>
     <form method="POST" action="">
       {{ form.hidden_tag() }} {{ form.name.label }} {{ form.name }}{{ form.age.label }} {{
-      form.age }} {{ form.learned_words.label }} {{ form.learned_words }} {{ form.image_url }}  {{ form.submit }}
+      form.age }} {{ form.image_url.label }} {{ form.image_url }}   {{ form.submit }}
   </body>
 </html>

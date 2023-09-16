@@ -24,6 +24,13 @@ login_manager.init_app(app)
 login_manager.login_view = 'login'
 bcrypt = Bcrypt(app)
 
+@app.context_processor
+def inject_toddler():
+    toddler = None
+    if current_user.is_authenticated:
+        toddler = Toddler.query.filter_by(user_id=current_user.id).first()
+    return dict(toddler=toddler)
+
 @login_manager.user_loader
 def load_user(user_id):
     return User.query.get(int(user_id))
@@ -40,7 +47,7 @@ def login():
         
         if user and bcrypt.check_password_hash(user.password, form.password.data):
             login_user(user)
-            return redirect(url_for('dashboard'))
+            return redirect(url_for('add_toddler'))
 
 
         
@@ -94,7 +101,6 @@ def add_toddler():
     # Check if the user already has a toddler
     existing_toddler = Toddler.query.filter_by(user_id=current_user.id).first()
     if existing_toddler:
-        flash('You have already added a toddler!')
         return redirect(url_for('dashboard'))
 
     form = AddToddlerForm()
@@ -106,17 +112,6 @@ def add_toddler():
         image_url=form.image_url.data or None)
         db.session.add(new_toddler)
 
-        words = [word.strip() for word in form.learned_words.data.split(',')]
-        for word_text in words:
-            word_instance = Word.query.filter_by(word=word_text).first()
-            
-            if not word_instance:
-                word_instance = Word(word=word_text)
-                db.session.add(word_instance)
-            
-            toddler_word = ToddlerWord(toddler=new_toddler, word=word_instance)
-            db.session.add(toddler_word)
-        
         db.session.commit()
         flash('Toddler added successfully!')
         return redirect(url_for('dashboard'))
@@ -129,31 +124,35 @@ def add_toddler():
 def suggest_word():
     form = SuggestWordForm()
     suggested_word_text = None
+    word_exists = False
     
     if form.validate_on_submit():
         # Fetch word suggestion based on category
         category = form.category.data
-        suggested_word_text = get_word_suggestion(category, current_user.id)
+        suggested_word_tuple = get_word_suggestion(category, current_user.id)
+        suggested_word_text, word_exists = suggested_word_tuple
         
         if suggested_word_text:
-            # Add this word to the SuggestedWord table
-            word_instance = Word.query.filter_by(word=suggested_word_text).first()
+            if not word_exists:
+                # Add this word to the SuggestedWord table
+                word_instance = Word.query.filter_by(word=suggested_word_text).first()
 
-            if not word_instance:
-                word_instance = Word(word=suggested_word_text)
-                db.session.add(word_instance)
-                db.session.flush()  # to get id for the new word
+                if not word_instance:
+                    word_instance = Word(word=suggested_word_text)
+                    db.session.add(word_instance)
+                    db.session.flush()  # to get id for the new word
 
-            toddler = Toddler.query.filter_by(user_id=current_user.id).first()
-            new_suggestion = SuggestedWord(toddler_id=toddler.id, word_id=word_instance.id)
-            db.session.add(new_suggestion)
-            db.session.commit()
+                toddler = Toddler.query.filter_by(user_id=current_user.id).first()
+                new_suggestion = SuggestedWord(toddler_id=toddler.id, word_id=word_instance.id)
+                db.session.add(new_suggestion)
+                db.session.commit()
 
-            flash(f'Suggested word: {suggested_word_text}')
-        else:
-            flash('Unable to fetch a word suggestion. Try again later.')
+                flash(f'Suggested word: {suggested_word_text}')
+            else:
+                flash(f'The suggested word "{suggested_word_text}" already exists in the database. Please suggest another word.')
 
-    return render_template('words/suggest_word.html', form=form, word=suggested_word_text)
+    return render_template('words/suggest_word.html', form=form, word=suggested_word_text, word_exists=word_exists)
+
 
 
 

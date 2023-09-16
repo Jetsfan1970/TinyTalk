@@ -4,10 +4,71 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Log In</title>
+    <style>
+
+      input[type="submit"]:hover {
+        background-color: #fabda1;
+        cursor: pointer;
+      }
+
+      form {
+        display: block;
+        width: 100%;       
+        max-width: 500px;  
+        padding: 20px;
+        margin: 0 auto;
+        text-align: center;
+      }
+      
+      input[type="submit"] {
+        padding: 15px 55px;
+        border: none;
+        border-radius: 40px;
+        cursor: pointer;
+        font-size: 30px;
+        background-color: #db996c;
+        color: #fcf8f3;
+        margin: 30px;
+      }
+      
+      input[type="text"],
+      input[type="email"],
+      input[type="password"] {
+        width: 100%;
+        padding: 15px;
+        margin-bottom: 10px;
+        border: 1px solid #fcf8f3;
+        border-radius: 40px;
+        font-size: 20px;
+        background-color: #aedadd;
+        color:#fcf8f3;
+      }
+      
+      body {
+        display: flex;
+        flex-direction: column;
+        justify-content: center; 
+        align-items: center;     
+        height: 75vh;            
+        margin: 0;
+        background-color: #fcf8f3;
+      }
+
+      h1 {
+        margin: 0 0 20px 0;
+        font-size: 100px;
+        color: #6e7da2;
+        font-weight: bold;
+      }
+
+      input::placeholder {
+        color: #fcf8f3;
+    }
+    </style>
   </head>
   <body>
-    <h1>Log In Here</h1>
-    <form method="POST" action="">
+    <h1>Log In</h1>
+    <form method="POST" action="" id="login">
         {{ form.hidden_tag() }} {{ form.username }} {{
         form.password }} {{ form.submit }}
   </body>

@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>{% block title %}My Website{% endblock %}</title>
+    <link
+      rel="stylesheet"
+      href="{{ url_for('static', filename='styles.css') }}"
+    />
+  </head>
+  <body>
+    <header>
+      <nav>
+        {% if not toddler %}
+        <a href="{{url_for('add_toddler')}}">Add Toddler</a>
+        {% endif %}
+        <a href="{{ url_for('submit_word') }}">Submit Learned Word</a>
+        <a href="{{ url_for('suggest_word') }}">Get New Word</a>
+        <a href="{{ url_for('learned_words') }}">View Learned Words</a>
+        <a href="{{ url_for('suggested_words') }}">View Suggested Words</a>
+        <a href="{{ url_for('logout') }}">Log Out</a>
+      </nav>
+    </header>
+    <main>{% block content %}{% endblock %}</main>
+    <footer></footer>
+  </body>
+</html>

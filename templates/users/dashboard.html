@@ -1,66 +1,49 @@
-<!DOCTYPE html>
-<html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Dashboard</title>
-  </head>
-  <body>
-    <h1>Welcome, {{ current_user.username }}</h1>
-    <a href="{{ url_for('logout') }}">Log Out Here!</a>
+{% extends "layout/base.html" %} {% block title %}Dashbaord - My Website{%
+endblock %} {% block content %} {% if toddler %}
+<div class="toddler-details">
+  <h2 id="todd-name">{{ toddler.name }}</h2>
+  <p id="age">Age: {{ toddler.age }} months</p>
+  {% if toddler.image_url %}
+  <img src="{{ toddler.image_url }}" alt="{{ toddler.name }}" width="150" />
+  {% endif %} {% if latest_word %}
+  <p id="newest-word">
+    Newest Learned Word: {{ latest_word[1].word }} on {{
+    latest_word[0].learned_on.strftime('%m-%d-%Y') }}
+  </p>
+  {% else %}
+  <p id="no-learned">No words learned yet!</p>
+  {% endif %}
+</div>
+{% endif %}
 
-    {% if not toddlers %}
-    <a href="{{url_for('add_toddler')}}">Add Toddler</a>
-    {% endif %}
-
-    <a href="{{url_for('submit_word')}}">Submit Learned Word</a>
-
-    <a href="{{ url_for('suggest_word') }}">Get New Word!</a>
-
-    <a href="{{ url_for('learned_words') }}">View Learned Words</a>
-
-    <a href="{{ url_for('suggested_words') }}">View Suggested Words</a>
-
-    {% if toddler %}
-    <div class="toddler-details">
-      <h2>{{ toddler.name }}</h2>
-      <p>Age: {{ toddler.age }}</p>
-      {% if toddler.image_url %}
-      <img src="{{ toddler.image_url }}" alt="{{ toddler.name }}" width="150" />
-      {% endif %} {% if latest_word %}
-      <p>
-        Newest Learned Word: {{ latest_word[1].word }} on {{
-        latest_word[0].learned_on.strftime('%m-%d-%Y') }}
-      </p>
-      {% else %}
-      <p>No words learned yet!</p>
-      {% endif %}
-    </div>
-    {% endif %}
-
-    <h3>Latest Suggested Words:</h3>
-    <ul>
-      {% if latest_suggestions %} {% for suggestion in latest_suggestions %} {%
-      if not suggestion[0].is_learned %}
-      <li>
+<div class="latest-word">
+  <h3 id="dboard-h3">Latest Suggested Words</h3>
+  <ul class="word-box">
+    {% if latest_suggestions %} {% for suggestion in latest_suggestions %} {% if
+    not suggestion[0].is_learned %}
+    <li class="dboard-word">
+      <div class="word-details">
         {{ suggestion[1].word }} ({{
         suggestion[0].suggested_on.strftime('%d-%m-%Y') }})
-        <form
-          method="POST"
-          action="{{ url_for('learn_word', word_id=suggestion[1].id) }}"
-        >
-          <button type="submit">Learn Word</button>
-        </form>
-        <form
-          method="POST"
-          action="{{ url_for('delete_suggested_word', suggestion_id=suggestion[0].id) }}"
-        >
-          <button type="submit">Delete Suggestion</button>
-        </form>
-      </li>
-      {% endif %} {% endfor %} {% else %}
-      <li>No suggested words available.</li>
-      {% endif %}
-    </ul>
-  </body>
-</html>
+      </div>
+      <form
+        method="POST"
+        action="{{ url_for('learn_word', word_id=suggestion[1].id) }}"
+      >
+        <button type="submit" class="learn-button">Learn Word</button>
+      </form>
+      <form
+        method="POST"
+        action="{{ url_for('delete_suggested_word', suggestion_id=suggestion[0].id) }}"
+      >
+        <button type="submit" class="delete-button">Delete Word</button>
+      </form>
+    </li>
+    {% endif %} {% endfor %} {% else %}
+    <li id="no-word">
+      Start Your Toddler's Speech Journey and With A Suggested Word!
+    </li>
+    {% endif %}
+  </ul>
+</div>
+{% endblock %}

@@ -4,10 +4,75 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Home Page</title>
+    <style>
+      body {
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        height: 75vh;
+        margin: 0;
+        background-color: #fcf8f3;
+      }
+
+      a.button {
+        display: inline-block;
+        padding: 20px 60px;
+        text-decoration: none;
+        border-radius: 40px;
+        margin: 30px;
+        font-size: 30px;
+      }
+
+      h1 {
+        margin: 5%;
+        font-size: 140px;
+        color: #6e7da2;
+        font-weight: bold;
+      }
+
+      #login {
+        background-color: #aedadd;
+        color: #fcf8f3;
+      }
+
+      #register {
+        background-color: #db996c;
+        color: #fcf8f3;
+      }
+
+      #login:hover {
+        background-color: #8cccb5;
+        cursor: pointer;
+      }
+
+      #register:hover {
+        background-color: #c57b58;
+        cursor: pointer;
+      }
+
+      p {
+        font-size: 20px;
+        color: #db996c;
+        margin: 10px;
+      }
+      #p-container {
+        padding-bottom: 20px;
+        text-align: center;
+      }
+    </style>
   </head>
   <body>
-    <h1>Tiny Talk!</h1>
-    <a href="{{url_for('login')}}">Log In Here!</a>
-    <a href="{{url_for('register')}}">Register Here!</a>
+    <h1>Tiny Talk</h1>
+    <div id="p-container">
+      <p>Record Words Your Toddler Learns On Their Speech Journey</p>
+      <p>And Get Suggestions For Age Appropriate Words To Teach Them!</p>
+    </div>
+    <div>
+      <a href="{{url_for('login')}}" id="login" class="button">Log In</a>
+      <a href="{{url_for('register')}}" id="register" class="button"
+        >Register</a
+      >
+    </div>
   </body>
 </html>
