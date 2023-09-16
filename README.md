@@ -1,4 +1,4 @@
 # TinyTalk <br>
-Capstone 1 Project <br>
 Link to APIs being used: https://platform.openai.com/ <br>
-The project will be using ChatGPT and possible DALL·E for the stretch goal
+Tiny Talk is an app that allows a user to record and help toddlers while they are learning speech. Many toddlers struggle with speech or are speech delayed. It can be hard on the parents, so this app helps make it a little easier. Users are able to record words that their toddler has learned. This helps parents with monitoring the pace a child is learning words, along with creating timestamps that a parent can relay to a speech therapist. <br>
+The app utilizes OpenAI API to suggest age appropriate words for a toddler to learn. it can be hard to find age appropriate words to try and teach a toddler, which OpenAI can help with. This app was made as a passion project, and does not provide any type of medical advice. it is desinged to be used as a fun tool and any parent that has a toddler with speech delay should seek advice from a professional.
